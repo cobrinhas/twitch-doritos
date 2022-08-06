@@ -12,6 +12,5 @@ const client = new Client({
 client.connect();
 
 client.on('message', (_, tags, message, __) => {
-    // "Alca: Hello, World!"
     console.log(`${tags['display-name']}: ${message}`);
 });
