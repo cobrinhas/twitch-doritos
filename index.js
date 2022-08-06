@@ -1,17 +1,17 @@
+import { config as dotenv } from 'dotenv';
 import { Client } from 'tmi.js';
 
+dotenv();
+
+const channelName = process.env.twitch_channel_name;
+
 const client = new Client({
-    options: { debug: true },
-    identity: {
-        username: 'bot_name',
-        password: 'oauth:my_bot_token'
-    },
-    channels: ['my_channel']
+    channels: [channelName],
 });
-client.connect().catch(console.error);
-client.on('message', (channel, tags, message, self) => {
-    if (self) return;
-    if (message.toLowerCase() === '!hello') {
-        client.say(channel, `@${tags.username}, heya!`);
-    }
+
+client.connect();
+
+client.on('message', (_, tags, message, __) => {
+    // "Alca: Hello, World!"
+    console.log(`${tags['display-name']}: ${message}`);
 });
